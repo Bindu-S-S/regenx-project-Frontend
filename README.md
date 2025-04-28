@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # JSON Formatter
 
 🚀 A Fast & Interactive JSON Formatter Built with React & Tailwind
@@ -27,3 +28,6 @@ JSON Formatter is a web-based tool that automatically formats and minifies JSON 
 	•	✅ Custom indentation options.
 
 💡 Contributions & suggestions are always welcome! 🚀
+=======
+# regenx-project-Frontend
+>>>>>>> 0ae37e9b70c01b362c3df95c7bcd6c6158f934e1
