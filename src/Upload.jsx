@@ -7,7 +7,7 @@ import { useAuth } from "./provider/authProvider";
 
 const Upload = () => {
   const navigate = useNavigate();
-  const { region, setRegion, setAllRegions } = useAuth();
+  const { region, setRegion, setAllRegions, allRegions } = useAuth();
   const [allFiles, setAllFiles] = React.useState([]);
   const [uploadFile, setUploadFile] = React.useState(null);
   const [description, setDescription] = React.useState("");
@@ -45,8 +45,8 @@ const Upload = () => {
 
       if (resp.data.files) {
         setAllFiles(resp.data.files);
-        const allRegions = resp.data.files.map((item) => item.region);
-        setAllRegions(allRegions);
+        const allRegionsTemp = resp.data.files.map((item) => item.region);
+        setAllRegions([...new Set([...allRegions, ...allRegionsTemp])]);
       }
     } catch (error) {
       console.error("Error fetching files:", error);
