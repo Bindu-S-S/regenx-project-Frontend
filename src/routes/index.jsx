@@ -7,7 +7,7 @@ import {
 import { useAuth } from "../provider/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import DocumentUpload from "../DocumentUpload";
-import SignUp from "../Signup";
+import SignUp from "../SignUp";
 import Login from "../Login";
 import NoAccess from "../NoAccess";
 import Header from "../components/Header";
