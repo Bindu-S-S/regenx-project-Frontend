@@ -13,7 +13,7 @@ const PdfViewer = () => {
         Viewer
       </h1>
       <iframe
-        src={`${import.meta.env.VITE_SOME_KEY}/file/${documentId}`}
+        src={`https://regenx.herokuapp.com/file/${documentId}`}
         title="PDF Viewer"
         width="100%"
         height="100%"
