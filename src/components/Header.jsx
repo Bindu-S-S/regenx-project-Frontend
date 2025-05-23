@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Button from "./Button";
-import Search from "./Search";
+import Button from "@/components/Button";
+import Search from "@/components/Search";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../provider/authProvider";
+import { useAuth } from "@/provider/authProvider";
 import { Button as Button1 } from "@mui/material";
 import axios from "axios";
 
@@ -28,8 +28,7 @@ const Header = () => {
           `${import.meta.env.VITE_SOME_KEY}/files/region/`
         );
         const reg = regionResponse?.data?.files.map((item) => item.region);
-        if(reg)
-        setAllRegions([...new Set(reg)]);
+        if (reg) setAllRegions([...new Set(reg)]);
       } catch (error) {
         console.error("Error fetching regions:", error);
       }
@@ -98,16 +97,16 @@ const Header = () => {
       <span className="hidden lg:flex gap-2 items-center">
         {!token ? (
           <div className="flex gap-[10px]">
+            <Button href="/" name={"Home"} />
+            <Button href="/document" name={"Documents"} />
+            <Button href="/heatmap" name={"Heatmap"} />
+            <Button href="/dimviz" name={"DimViz"} />
             <Button href="/login" name={"Login"} />
             <Button href="/signup" name={"Signup"} />
           </div>
         ) : (
           <div className="flex gap-[10px] relative">
-            <Button href="/" name={"Home"} />
-            <Button href="/document" name={"Documents"} />
             <Button href="/upload" name={"Upload"} />
-            <Button href="/heatmap" name={"Heatmap"} />
-            <Button href="/dimviz" name={"DimViz"} />
             <Button href="/profile" name={"Profile"} />
             <Button onClick={handleLogout} href="#" name={"Logout"} notNav />
           </div>
@@ -171,6 +170,10 @@ const Header = () => {
               onClick={() => setIsOpen(false)}
               className="flex gap-[10px] w-full flex-col items-center"
             >
+              <Button href="/" name={"Home"} />
+              <Button href="/document" name={"Documents"} />
+              <Button href="/heatmap" name={"Heatmap"} />
+              <Button href="/dimviz" name={"DimViz"} />
               <Button href="/login" name={"Login"} />
               <Button href="/signup" name={"Signup"} />
             </div>
@@ -179,11 +182,7 @@ const Header = () => {
               onClick={() => setIsOpen(false)}
               className="flex gap-[10px] flex-col w-full items-center"
             >
-              <Button href="/" name={"Home"} />
-              <Button href="/document" name={"Documents"} />
               <Button href="/upload" name={"Upload"} />
-              <Button href="/heatmap" name={"Heatmap"} />
-              <Button href="/dimviz" name={"DimViz"} />
               <Button href="/profile" name={"Profile"} />
               <Button onClick={handleLogout} href="#" name={"Logout"} notNav />
             </div>

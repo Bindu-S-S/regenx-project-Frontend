@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import Button1 from "./components/Button";
+import Button1 from "@/components/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -66,13 +66,7 @@ export default function SignUp(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
-
-  // Environment-aware API URL configuration
-  const API_BASE_URL = process.env.NODE_ENV === 'production' 
-    ? 'https://regenx.herokuapp.com'
-    : import.meta.env.VITE_SOME_KEY || 'http://localhost:3000';
 
   const validateInputs = () => {
     const email = document.getElementById("email");
@@ -111,50 +105,26 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    
-    // Validate inputs first
-    if (!validateInputs()) {
-      return;
-    }
-
-    // Check for validation errors
     if (nameError || emailError || passwordError) {
       return;
     }
-
     const data = new FormData(event.currentTarget);
-    setIsLoading(true);
 
-    try {
-      const response = await axios.post(`${API_BASE_URL}/signup`, {
+    axios
+      .post(`${import.meta.env.VITE_SOME_KEY}/signup`, {
         name: data.get("name"),
         email: data.get("email"),
         password: data.get("password"),
+      })
+      .then((response) => {
+        alert("User created successfully");
+        navigate("/login", { replace: true });
+      })
+      .catch((error) => {
+        alert("Error creating user");
       });
-
-      console.log("Signup successful:", response.data);
-      alert("User created successfully! Please login with your credentials.");
-      navigate("/login", { replace: true });
-    } catch (error) {
-      console.error("Signup error:", error);
-      
-      // Better error handling
-      let errorMessage = "Error creating user. Please try again.";
-      
-      if (error.response?.data?.error) {
-        errorMessage = error.response.data.error;
-      } else if (error.response?.data?.message) {
-        errorMessage = error.response.data.message;
-      } else if (error.message) {
-        errorMessage = `Network error: ${error.message}`;
-      }
-      
-      alert(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -186,7 +156,6 @@ export default function SignUp(props) {
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? "error" : "primary"}
-                disabled={isLoading}
               />
             </FormControl>
             <FormControl>
@@ -201,8 +170,7 @@ export default function SignUp(props) {
                 variant="outlined"
                 error={emailError}
                 helperText={emailErrorMessage}
-                color={emailError ? "error" : "primary"}
-                disabled={isLoading}
+                color={passwordError ? "error" : "primary"}
               />
             </FormControl>
             <FormControl>
@@ -219,17 +187,15 @@ export default function SignUp(props) {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 color={passwordError ? "error" : "primary"}
-                disabled={isLoading}
               />
             </FormControl>
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              disabled={isLoading}
-              sx={{ mt: 1 }}
+              onClick={validateInputs}
             >
-              {isLoading ? "Creating Account..." : "Sign up"}
+              Sign up
             </Button>
           </Box>
           <Divider>

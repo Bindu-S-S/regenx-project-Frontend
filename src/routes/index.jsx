@@ -4,25 +4,25 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { useAuth } from "../provider/authProvider";
-import { ProtectedRoute } from "./ProtectedRoute";
-import DocumentUpload from "../DocumentUpload";
-import SignUp from "../SignUp";
-import Login from "../Login";
-import NoAccess from "../NoAccess";
-import Header from "../components/Header";
-import Home from "../Home";
-import Profile from "../Profile";
-import HeatMap from "../HeatMap";
-import DimViz from "../DimViz";
-import Upload from "../Upload";
-import PdfViewer from "../PdfViewer";
+import { useAuth } from "@/provider/authProvider";
+import { ProtectedRoute } from "@/routes/ProtectedRoute";
+import DocumentUpload from "@/DocumentUpload";
+import SignUp from "@/SignUp.jsx";
+import Login from "@/Login";
+import NoAccess from "@/NoAccess";
+import Header from "@/components/Header";
+import Home from "@/Home";
+import Profile from "@/Profile";
+import HeatMap from "@/HeatMap";
+import DimViz from "@/DimViz";
+import Upload from "@/Upload";
+import PdfViewer from "@/PdfViewer";
 
 {
   /* <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
         
       </Routes> */
@@ -60,6 +60,10 @@ const Routes = () => {
           path: "/doc/:documentId",
           element: <PdfViewer />,
         },
+        { path: "/document/:query?", element: <DocumentUpload /> },
+        { path: "/heatmap", element: <HeatMap /> },
+
+        { path: "/dimviz", element: <DimViz /> },
       ],
     },
     {
@@ -73,20 +77,6 @@ const Routes = () => {
     {
       element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
       children: [
-        {
-          element: <LayoutWithHeader />,
-          children: [
-            { path: "/document/:query?", element: <DocumentUpload /> },
-          ],
-        },
-        {
-          element: <LayoutWithHeader />,
-          children: [{ path: "/heatmap", element: <HeatMap /> }],
-        },
-        {
-          element: <LayoutWithHeader />,
-          children: [{ path: "/dimviz", element: <DimViz /> }],
-        },
         {
           element: <LayoutWithHeader />,
           children: [{ path: "/upload", element: <Upload /> }],

@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { Document } from "react-pdf";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./provider/authProvider";
+import { useAuth } from "@/provider/authProvider";
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -41,7 +41,12 @@ const Upload = () => {
 
   const fetchFiles = async () => {
     try {
-      const resp = await axios.get(`${import.meta.env.VITE_SOME_KEY}/files`);
+      const resp = await axios.get(`${import.meta.env.VITE_SOME_KEY}/files`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (resp.data.files) {
         setAllFiles(resp.data.files);
@@ -98,14 +103,14 @@ const Upload = () => {
               <div className="flex flex-col w-full gap-2">
                 <label
                   for="message"
-                  class="block mb-2 text-sm font-medium text-black dark:text-black"
+                  className="block mb-2 text-sm font-medium text-black dark:text-black"
                 >
                   Region
                 </label>
                 <input
                   id="message"
                   rows="4"
-                  className="block p-2.5 w-full text-sm text-black bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block p-2.5 w-full text-sm !text-[#000000] bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Write the region here..."
                   value={region1}
                   onChange={(e) => setRegion1(e.target.value)}
@@ -115,7 +120,7 @@ const Upload = () => {
               <div className="flex flex-col w-full gap-2">
                 <label
                   for="message"
-                  className="block mb-2 text-sm font-medium !text-[#000000] dark:text-black"
+                  className="block mb-2 text-sm font-medium text-black dark:text-black"
                 >
                   Description
                 </label>

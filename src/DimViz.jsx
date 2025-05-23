@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React from "react";
-import Button1 from "./components/Button";
+import Button1 from "@/components/Button";
 
 const DimViz = () => {
   const tempData = [
@@ -20,8 +20,6 @@ const DimViz = () => {
     "1977_1988",
     "1989_1996",
     "1997_2015",
-    "2016_2020",
-    "2021_2025"
   ];
 
   const [selected, setSelected] = React.useState(tempData[0]);
